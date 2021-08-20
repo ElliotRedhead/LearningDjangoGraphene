@@ -14,7 +14,7 @@ def client_query(client):
 
 # Test you query using the client_query fixture
 @pytest.mark.django_db
-def test_ingredients_get(client_query):
+def test_ingredients_empty_get(client_query):
     response = client_query(
         """
         query {
@@ -26,5 +26,10 @@ def test_ingredients_get(client_query):
         }
         """
     )
-    content = json.loads(response.content)
-    assert "errors" not in content
+
+    expected_data = {"allIngredients": []}
+
+    actual_content = json.loads(response.content)
+    actual_data = actual_content["data"]
+    assert "errors" not in actual_content
+    assert expected_data == actual_data
