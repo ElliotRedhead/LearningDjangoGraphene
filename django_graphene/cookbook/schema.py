@@ -31,4 +31,40 @@ class Query(graphene.ObjectType):
             return None
 
 
-schema = graphene.Schema(query=Query)
+class IngredientMutation(graphene.Mutation):
+    class Arguments:
+        # The input arguments for this mutation
+        name = graphene.String()
+        notes = graphene.String()
+        category = graphene.String()
+        id = graphene.ID()
+
+    # The class attributes define the response of the mutation
+    ingredient = graphene.Field(IngredientType)
+
+    @classmethod
+    def mutate(cls, root, info, id, **kwargs):
+
+        ingredient = Ingredient.objects.get(pk=id)
+
+        name = kwargs.get("name", None)
+        notes = kwargs.get("notes", None)
+        category = kwargs.get("category", None)
+
+        if name is not None:
+            ingredient.name = name
+        if notes is not None:
+            ingredient.notes = notes
+        if category is not None:
+            ingredient.category = category
+
+        ingredient.save()
+        # return an instance of this mutation
+        return IngredientMutation(ingredient=ingredient)
+
+
+class Mutation(graphene.ObjectType):
+    update_ingredient = IngredientMutation.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
