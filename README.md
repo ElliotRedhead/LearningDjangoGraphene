@@ -16,3 +16,6 @@ Introduction to GraphQL in Django
 ## Useful commands/developer notes
 
 Insert JSON file into app/fixtures, load fixtures with: `python manage.py loaddata ingredients`  
+Run pytest (in django_graphene dir) `pytest`  
+Generate coverage from pytest (in django_graphene dir) `coverage run -m pytest`  
+Generate coverage reports `coverage report` or `coverage html`  
