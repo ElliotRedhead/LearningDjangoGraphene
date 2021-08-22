@@ -1,5 +1,6 @@
 # Create fixture using the graphql_query helper & `client` fixture from `pytest-django`.
 import json
+
 import pytest
 from graphene_django.utils.testing import graphql_query
 
