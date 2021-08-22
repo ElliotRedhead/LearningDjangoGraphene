@@ -1,0 +1,13 @@
+[run]
+source = .
+
+[report]
+omit =
+	venv/*
+	*/tests*
+	*/migrations/*
+	*/__init__.py
+	*/asgi.py
+	*/manage.py
+	*/settings.py
+	*/wsgi.py
