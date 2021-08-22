@@ -1,4 +1,5 @@
 import graphene
+from graphql import GraphQLError
 from graphene_django import DjangoObjectType
 
 from ingredients.models import Category, Ingredient
@@ -31,13 +32,56 @@ class Query(graphene.ObjectType):
             return None
 
 
-class IngredientMutation(graphene.Mutation):
+class CategoryCreate(graphene.Mutation):
+    class Arguments:
+        name = graphene.String()
+
+    category = graphene.Field(CategoryType)
+
+    @classmethod
+    def mutate(cls, root, info, **kwargs):
+        name = kwargs.get("name", None)
+        category = Category.objects.create(name=name)
+        return CategoryCreate(category=category)
+
+
+class IngredientCreate(graphene.Mutation):
     class Arguments:
         # The input arguments for this mutation
         name = graphene.String()
         notes = graphene.String()
-        category = graphene.String()
+        category_name = graphene.String()
+
+    # The class attributes define the response of the mutation
+    ingredient = graphene.Field(IngredientType)
+
+    @classmethod
+    def mutate(cls, root, info, **kwargs):
+        category = None
+
+        name = kwargs.get("name", None)
+        notes = kwargs.get("notes", None)
+        category_name = kwargs.get("category_name", None)
+
+        if category_name is not None:
+            category = Category.objects.filter(name=category_name).first()
+            if category is None:
+                category = Category.objects.create(name=category_name)
+
+        ingredient = Ingredient.objects.create(
+            name=name, notes=notes, category=category
+        )
+
+        return IngredientCreate(ingredient=ingredient)
+
+
+class IngredientUpdate(graphene.Mutation):
+    class Arguments:
+        # The input arguments for this mutation
         id = graphene.ID()
+        name = graphene.String()
+        notes = graphene.String()
+        category = graphene.String()
 
     # The class attributes define the response of the mutation
     ingredient = graphene.Field(IngredientType)
@@ -60,11 +104,13 @@ class IngredientMutation(graphene.Mutation):
 
         ingredient.save()
         # return an instance of this mutation
-        return IngredientMutation(ingredient=ingredient)
+        return IngredientUpdate(ingredient=ingredient)
 
 
 class Mutation(graphene.ObjectType):
-    update_ingredient = IngredientMutation.Field()
+    create_ingredient = IngredientCreate.Field()
+    update_ingredient = IngredientUpdate.Field()
+    create_category = CategoryCreate.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
