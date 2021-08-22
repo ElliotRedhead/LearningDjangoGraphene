@@ -1,3 +1,5 @@
+![Django CI](https://github.com/ElliotRedhead/learningdjangographene/actions/workflows/django.yml/badge.svg)
+
 # Learning Django Graphene
 
 Introduction to GraphQL in Django  
