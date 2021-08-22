@@ -27,4 +27,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        cd django_graphene && pytest
+        cd django_graphene && coverage run -m pytest
+    - name: "Upload coverage to Codecov"
+      uses: codecov/codecov-action@v1

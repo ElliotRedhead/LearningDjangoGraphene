@@ -1,5 +1,5 @@
 ![Django CI](https://github.com/ElliotRedhead/learningdjangographene/actions/workflows/django.yml/badge.svg)
-
+[![codecov](https://codecov.io/gh/elliotredhead/learningdjangographene/branch/main/graph/badge.svg)](https://codecov.io/gh/elliotredhead/learningdjangographene)  
 # Learning Django Graphene
 
 Introduction to GraphQL in Django  
@@ -11,7 +11,7 @@ Introduction to GraphQL in Django
 
 ## Supporting Resource
 
-https://docs.graphene-python.org/projects/django/en/latest/tutorial-plain/
+[The Graphene Docs](https://docs.graphene-python.org/projects/django/en/latest/tutorial-plain/)
 
 ## Useful commands/developer notes
 
