@@ -4,7 +4,7 @@ source = .
 [report]
 omit =
 	venv/*
-	*/tests*
+	*/test*
 	*/migrations/*
 	*/__init__.py
 	*/asgi.py

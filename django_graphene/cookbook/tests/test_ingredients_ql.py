@@ -13,7 +13,7 @@ def client_query(client):
     return func
 
 
-# Test you query using the client_query fixture
+# Test the query using the client_query fixture
 @pytest.mark.django_db
 def test_ingredients_empty_get(client_query):
     response = client_query(
